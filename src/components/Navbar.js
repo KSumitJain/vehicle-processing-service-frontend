@@ -4,7 +4,7 @@ function NavBar({ inactive }) {
   return (
     <>
       <div className={`navbar ${inactive ? 'side-bar-closed' : ''} `}>
-        <h1 className="navbar-heading">Vehicle Identificaton</h1>
+        <h1 className="navbar-heading">Eye Watch Vehicle Monitoring</h1>
       </div>
     </>
   );
