@@ -28,7 +28,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function RegisterCamera({ inactive }) {
   const [vehicle, setVehicle] = useState('');
   const [otype, setOtype] = useState('');
-  const [vehicleData, setVehicleData] = useState('');
+  const [vehicleData, setVehicleData] = useState([]);
   const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -62,7 +62,7 @@ function RegisterCamera({ inactive }) {
     <div className={`contact-body ${!inactive ? 'contact-inactive' : ''} `}>
       <div class="section-header">
         <div class="contact-container">
-          <h2>Register Camera</h2>
+          <h1 className="navbar-heading">Register Camera</h1>
           <p>Register your camera with exact location.</p>
         </div>
       </div>
@@ -70,36 +70,49 @@ function RegisterCamera({ inactive }) {
         <div class="contact-info">
           <div className="formCenter">
             <form className="formFields" onSubmit={handleSubmit}>
-              <div className="formField">
-                <label className="formFieldLabel" htmlFor="email">
-                  Pincode
-                </label>
-                <input
-                  type="text"
-                  id="vehicle"
-                  className="formFieldInput"
-                  placeholder="Enter the pincode"
-                  name="vehicle"
-                  value={vehicle}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setVehicle(e.target.value);
-                  }}
-                />
-                <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Ownertype</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={otype}
-                    label="PinCode"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={"public"}>Public</MenuItem>
-                    <MenuItem value={"private"}>Private</MenuItem>
-                    <MenuItem value={"individual"}>Individual</MenuItem>
-                </Select>
-                </FormControl>
+              <div className="row">
+                <div className="column">
+                  <div className="formField">
+                    <label className="formFieldLabel" htmlFor="email">
+                      Sector Type
+                    </label>
+                    <select
+                      id="camera"
+                      className="formFieldInput"
+                      placeholder="Enter Pincode"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        var e = document.getElementById('camera');
+                        console.log(e);
+                        setVehicle(e.value);
+                      }}
+                    >
+                      <option style={{color:"black"}} value="public" selected>
+                        Public
+                      </option>
+                      <option style={{color:"black"}} value="private">Private</option>
+                      <option style={{color:"black"}} value="goverment">Goverment</option>
+                      <option style={{color:"black"}} value="individual">Individual</option>
+                    </select>
+                  </div>
+                  <div className="column">
+                    <label className="formFieldLabel" htmlFor="email">
+                      Pincode
+                    </label>
+                    <input
+                      type="text"
+                      id="vehicle"
+                      className="formFieldInput"
+                      placeholder="Enter the pincode"
+                      name="vehicle"
+                      value={vehicle}
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setVehicle(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
               <div className="formField">
                 <button className="formFieldButton" onClick={handleSubmit}>
@@ -131,28 +144,50 @@ function RegisterCamera({ inactive }) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <table>
-            <tr>
-              <th>
-                <Typography gutterBottom>Vehicle Number</Typography>
-              </th>
-              <td>
-                <Typography gutterBottom>
-                  {vehicleData?.vehicleNumber || ' '}
-                </Typography>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <Typography gutterBottom>Registered Address</Typography>
-              </th>
-              <td>
-                <Typography gutterBottom>
-                  {vehicleData?.addressLine1 || ' '}
-                </Typography>
-              </td>
-            </tr>
-          </table>
+          {vehicleData?.map((element) => {
+            <table>
+              <tr>
+                <th>
+                  <Typography gutterBottom>Vehicle Number</Typography>
+                </th>
+                <td>
+                  <Typography gutterBottom>
+                    {element?.vehicleNumber || ' '}
+                  </Typography>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Typography gutterBottom>Registered Address</Typography>
+                </th>
+                <td>
+                  <Typography gutterBottom>
+                    {element?.addressLine1 || ' '}
+                  </Typography>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Typography gutterBottom>Found At</Typography>
+                </th>
+                <td>
+                  <Typography gutterBottom>
+                    {element?.line +
+                      ', ' +
+                      element?.area +
+                      ', ' +
+                      element?.city +
+                      ', ' +
+                      element?.state +
+                      ', ' +
+                      element?.country +
+                      ', ' +
+                      element?.pinCode}
+                  </Typography>
+                </td>
+              </tr>
+            </table>;
+          })}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

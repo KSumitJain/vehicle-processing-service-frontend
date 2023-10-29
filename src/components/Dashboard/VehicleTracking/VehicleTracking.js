@@ -23,7 +23,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 function VehicleTracking({ inactive }) {
   const [vehicle, setVehicle] = useState('');
-  const [vehicleData, setVehicleData] = useState('');
+  const [vehicleData, setVehicleData] = useState([]);
   const [trackingDate, setTrackingDate] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -37,9 +37,15 @@ function VehicleTracking({ inactive }) {
     event.preventDefault();
     if (vehicle !== '') {
       axios
-        .get('https://jsonplaceholder.typicode.com/posts')
+        .get(
+          'http://localhost:8080/vehicle/' +
+            vehicle + '?timestamp=' +
+		new Date(trackingDate).toISOString().replace('T', ' ').replace('Z', ' ')
+        )
         .then((response) => {
+          
           setVehicleData(response.data);
+console.log(response.data+'hello')
           handleClickOpen();
         })
         .catch((error) => {
@@ -86,7 +92,7 @@ function VehicleTracking({ inactive }) {
                       Tracking Date
                     </label>
                     <input
-                      type="date"
+                      type="datetime-local"
                       id="start"
                       className="formFieldInput"
                       name="trip-start"
@@ -133,28 +139,41 @@ function VehicleTracking({ inactive }) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <table>
-            <tr>
-              <th>
-                <Typography gutterBottom>Vehicle Number</Typography>
-              </th>
-              <td>
-                <Typography gutterBottom>
-                  {vehicleData?.vehicleNumber || ' '}
-                </Typography>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <Typography gutterBottom>Registered Address</Typography>
-              </th>
-              <td>
-                <Typography gutterBottom>
-                  {vehicleData?.addressLine1 || ' '}
-                </Typography>
-              </td>
-            </tr>
-          </table>
+          
+          <div className='row'>
+                 <Typography gutterBottom><strong> Vehicle Number :</strong></Typography>
+                
+                  <Typography gutterBottom>
+                    {vehicleData[0]?.registrationNumber || ' '}
+                  </Typography>
+                </div>
+<div className='row'>
+                  <strong><Typography gutterBottom><strong> Registered Address :</strong></Typography></strong>
+                
+                  <Typography gutterBottom>
+                    {vehicleData[0]?.line +
+                      ', ' +
+                      vehicleData[0]?.area +
+                      ', ' +
+                      vehicleData[0]?.city +
+                      ', ' +
+                      vehicleData[0]?.state +
+                      ', ' +
+                      vehicleData[0]?.country +
+                      ', ' +
+                      vehicleData[0]?.pinCode}
+                  </Typography>
+                </div>
+<div className='row'>
+                 <Typography gutterBottom><strong> Registered Address :</strong></Typography>
+                
+                  <Typography gutterBottom>
+			{vehicleData[0]?.foundAt}
+                    
+                  </Typography>
+                </div>
+     <img src={vehicleData[0]?.imagePath}/>
+        
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

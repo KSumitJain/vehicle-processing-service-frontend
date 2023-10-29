@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import SignUpForm from './SignUpForm';
 import SignInForm from './SignInForm';
 
@@ -22,9 +22,7 @@ export default function Login() {
             <div className="row homeRowset">
               <div class="column homeRowset">
                 <div className="appAside">
-                  <h1 className="navbar-heading homeRowset">
-                    Eye Watch Vehicle Monitoring
-                  </h1>
+                  <h1 className="navbar-heading homeRowset">Eye Watch</h1>
                   <img
                     src={BannerImage}
                     alt="vehicle tracking"
