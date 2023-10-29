@@ -1,0 +1,41 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-body {
+  margin-right: 0%;
+  background-color: #6b5b95;
+  font-style: italic;
+  color: white;
+}
+
+.dashboard-inactive {
+  margin-left: 22%;
+}
+
+/* i {
+  font-size: 214%;
+} */
+.dashboardImage {
+  width: 99.5%;
+}
+.division0 {
+  /* background: #d9d9d9; */
+  /* margin: 5%; */
+  padding: 2%;
+  text-align: center;
+}
+.division1 {
+  /* background: white; */
+  margin: 2%;
+}
+.division2 {
+  text-align: left;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-left: 21%;
+  margin-right: 21%;
+}
